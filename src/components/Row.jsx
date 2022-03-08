@@ -16,26 +16,21 @@ class Row extends Component {
         return length
     }
     setSizes(index, value) {
-        console.log('state1', this.state.sizes)
         let s = this.state.sizes.slice()
         s[index] = Number(value)
         let length = this.getSizesCount(s)
         //we need to remove one or more tiles
-        console.log('length', length, 'state', this.state.sizes.length)
         while(length > 13) {
-            s.pop()
+            s.splice(index + 1, 1)
             length = this.getSizesCount(s)
         }
         //we need to add one tile
         if(length < 13) {
-            console.log('less')
-            console.log('s1', s)
-            s.push(1)
-            console.log('s2', s)
+            s.splice(index + 1, 0, 1)
             length = this.getSizesCount(s)
             //widen that tile until we have enough
             while(length < 13) {
-                s[s.length - 1] += 1
+                s[index + 1] += 1
                 length = this.getSizesCount(s)
             }
         }

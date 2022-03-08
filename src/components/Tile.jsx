@@ -19,6 +19,19 @@ class Tile extends Component {
             fontColor: document.querySelector('#fontColor').value,
             backgroundColor: document.querySelector('#backgroundColor').value
         })
+        
+        this.props.setSizes(this.props.id, document.querySelector('#size').value)
+        this.handleModal()
+    }
+
+    resetTile() {
+        this.setState({
+            subject: '',
+            teacher: '',
+            classroom: '',
+            backgroundColor: '#FFFFFF',
+            fontColor: '#000000'
+        })
         this.handleModal()
     }
 
@@ -27,9 +40,14 @@ class Tile extends Component {
     }
 
     render() { 
+        ReactModal.setAppElement('#root');
         return (
             <React.Fragment>
-                <div onClick={() => {this.handleModal()}} className='tile' style={{width: 'calc((100% / 14) + 1px)', backgroundColor: this.state.backgroundColor, color: this.state.fontColor}}>
+                <div onClick={() => {this.handleModal()}} className='tile' style={{
+                    width: 'calc((100% / 14) * ' + this.props.size + ' + 1px)', 
+                    backgroundColor: this.state.backgroundColor, 
+                    color: this.state.fontColor
+                }}>
                     <p>{this.state.subject}<br/>
                     {this.state.teacher}<br/>
                     {this.state.classroom}</p>
@@ -63,9 +81,12 @@ class Tile extends Component {
                                 <input type="color" id="backgroundColor" defaultValue={this.state.backgroundColor}/>
                             </div>
                             </div>
+                        <label htmlFor="size">Tile size</label>
+                        <input type='number' defaultValue={this.props.size} id='size' className='form-control' min={1} max={13}/>
                         <br />
-                        <button className='btn btn-danger' onClick={() => this.handleModal()}>Close</button>
-                        <button className='btn btn-primary' onClick={() => {this.editTile()}} style={{float: 'right'}}>Save</button>
+                        <button className='btn btn-danger m-1' onClick={() => this.handleModal()}>Close</button>
+                        <button className='btn btn-primary m-1' onClick={() => {this.editTile()}} style={{float: 'right'}}>Save</button>
+                        <button className='btn btn-warning m-1' onClick={() => this.resetTile()} style={{float: 'right'}}>Reset</button>
                     </div>
                 </ReactModal>
             </React.Fragment>

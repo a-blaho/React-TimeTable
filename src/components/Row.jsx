@@ -4,15 +4,58 @@ import Tile from './Tile';
 
 class Row extends Component {
     state = { 
-        tiles: []
+        tiles: [],
+        sizes: [1,1,1,1,1,1,1,1,1,1,1,1,1]
      } 
-    handleClick() {
-     console.log('click')   
+
+    getSizesCount(sizes) {
+        let length = 0
+        sizes.forEach(s => {
+            length += s
+        })
+        return length
+    }
+    setSizes(index, value) {
+        console.log('state1', this.state.sizes)
+        let s = this.state.sizes.slice()
+        s[index] = Number(value)
+        let length = this.getSizesCount(s)
+        //we need to remove one or more tiles
+        console.log('length', length, 'state', this.state.sizes.length)
+        while(length > 13) {
+            s.pop()
+            length = this.getSizesCount(s)
+        }
+        //we need to add one tile
+        if(length < 13) {
+            console.log('less')
+            console.log('s1', s)
+            s.push(1)
+            console.log('s2', s)
+            length = this.getSizesCount(s)
+            //widen that tile until we have enough
+            while(length < 13) {
+                s[s.length - 1] += 1
+                length = this.getSizesCount(s)
+            }
+        }
+        this.setState({
+            sizes: s.slice(),
+        }, () => {
+            this.setState({tiles: []})
+            let t = []
+            for (let i = 0; i < this.state.sizes.length; i++) {
+                t.push(<Tile key={i} id={i} size={this.state.sizes[i]} setSizes={(index, value) => {this.setSizes(index, value)}}/>)
+            }
+            this.setState({tiles: t})
+        })
+        
     }
     render() {
-        for (let i = 0; i < 13; i++) {
-            let color = this.props.color ? this.props.color[i] : 'white'
-            this.state.tiles.push(<Tile key={i} color={color} onClick={() => {this.handleClick()}}/>)
+        if(this.state.tiles.length === 0) {
+            for (let i = 0; i < this.state.sizes.length; i++) {
+                this.state.tiles.push(<Tile key={i} id={i} size={this.state.sizes[i]} setSizes={(index, value) => {this.setSizes(index, value)}}/>)
+            }
         }
         return (
             <React.Fragment>

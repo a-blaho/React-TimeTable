@@ -1,54 +1,45 @@
 .tile {
-    height: 75px;
-    width: calc(100% / 14 + 1px);
-    border: 1px solid black;
-    background-color: white;
-    margin: -0.5px;
-    float: left
-}
-
-.tile input {
-    border: 0px;
-    width: 100%
+  height: 75px;
+  width: calc(100% / 14 + 1px);
+  border: 1px solid black;
+  background-color: white;
+  margin: -0.5px;
+  float: left;
+  cursor: pointer;
 }
 
 .timetile {
-    border: 1px solid black;
-    width: calc(100% / 14 + 1px);
-    height: 30px;
-    float: left;
-    text-align: center;
-    margin: -0.5px;
+  border: 1px solid black;
+  width: calc(100% / 14 + 1px);
+  height: 30px;
+  float: left;
+  text-align: center;
+  margin: -0.5px;
 }
 
 .timetable p {
-    white-space: nowrap; 
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.timetable p:hover {
-    cursor:default
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .daytile {
-    border: 1px solid black;
-    height: 75px;
-    width: calc(100% / 14 + 1px);
-    margin: -0.5px;
-    float: left;
-    display: flex;
-    align-items:center;
-    justify-content:center;
+  border: 1px solid black;
+  height: 75px;
+  width: calc(100% / 14 + 1px);
+  margin: -0.5px;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .reactmodal {
-    border: 1px solid black;
-    height: 470px;
-    width: 500px;
-    background-color: white;
-    left: calc(50% - 200px);
-    top: calc(50% - 300px);
-    position: absolute;
+  border: 1px solid black;
+  height: 470px;
+  width: 500px;
+  background-color: white;
+  left: calc(50% - 200px);
+  top: calc(50% - 300px);
+  position: absolute;
 }
-

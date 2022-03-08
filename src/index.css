@@ -1,13 +1,54 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.tile {
+    height: 75px;
+    width: calc(100% / 14 + 1px);
+    border: 1px solid black;
+    background-color: white;
+    margin: -0.5px;
+    float: left
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.tile input {
+    border: 0px;
+    width: 100%
 }
+
+.timetile {
+    border: 1px solid black;
+    width: calc(100% / 14 + 1px);
+    height: 30px;
+    float: left;
+    text-align: center;
+    margin: -0.5px;
+}
+
+.timetable p {
+    white-space: nowrap; 
+    text-overflow: clip;
+    overflow: hidden;
+}
+
+.timetable p:hover {
+    cursor:default
+}
+
+.daytile {
+    border: 1px solid black;
+    height: 75px;
+    width: calc(100% / 14 + 1px);
+    margin: -0.5px;
+    float: left;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.reactmodal {
+    border: 1px solid black;
+    height: 400px;
+    width: 500px;
+    background-color: white;
+    left: calc(50% - 200px);
+    top: calc(50% - 300px);
+    position: absolute;
+}
+

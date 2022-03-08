@@ -23,7 +23,7 @@
 
 .timetable p {
     white-space: nowrap; 
-    text-overflow: clip;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 

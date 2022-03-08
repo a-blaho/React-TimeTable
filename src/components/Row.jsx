@@ -4,58 +4,124 @@ import Tile from './Tile';
 
 class Row extends Component {
     state = { 
-        tiles: [],
-        sizes: [1,1,1,1,1,1,1,1,1,1,1,1,1]
+        tiles: this.tilesInit()
      } 
 
-    getSizesCount(sizes) {
+     tilesInit() {
+        let tiles = []
+        for(let i = 0; i < 13; i++) {
+            tiles.push({
+                size: 1,
+                fontColor: '#000000',
+                backgroundColor: '#FFFFFF',
+                subject: '',
+                teacher: '',
+                classroom: '',
+                maxSize: 13 - i
+            })
+        }
+        return tiles
+     }
+
+     getSizesCount(tiles) {
         let length = 0
-        sizes.forEach(s => {
-            length += s
+        tiles.forEach(t => {
+            length += t.size
         })
         return length
     }
-    setSizes(index, value) {
-        let s = this.state.sizes.slice()
-        s[index] = Number(value)
-        let length = this.getSizesCount(s)
-        //we need to remove one or more tiles
-        while(length > 13) {
-            s.splice(index + 1, 1)
-            length = this.getSizesCount(s)
-        }
-        //we need to add one tile
-        if(length < 13) {
-            s.splice(index + 1, 0, 1)
-            length = this.getSizesCount(s)
-            //widen that tile until we have enough
-            while(length < 13) {
-                s[index + 1] += 1
-                length = this.getSizesCount(s)
+
+    fixMaxSizes(tiles) {
+        for (let i = 0; i < tiles.length; i++) {
+            let maxSize = 0
+            for(let j = i; j < tiles.length; j++) {
+                maxSize += tiles[j].size
             }
+            tiles[i].maxSize = maxSize
         }
-        this.setState({
-            sizes: s.slice(),
-        }, () => {
-            this.setState({tiles: []})
-            let t = []
-            for (let i = 0; i < this.state.sizes.length; i++) {
-                t.push(<Tile key={i} id={i} size={this.state.sizes[i]} setSizes={(index, value) => {this.setSizes(index, value)}}/>)
-            }
-            this.setState({tiles: t})
-        })
-        
+        return tiles
     }
-    render() {
-        if(this.state.tiles.length === 0) {
-            for (let i = 0; i < this.state.sizes.length; i++) {
-                this.state.tiles.push(<Tile key={i} id={i} size={this.state.sizes[i]} setSizes={(index, value) => {this.setSizes(index, value)}}/>)
+
+    editTile(index, newTile) {
+        let t = this.state.tiles.slice()
+        t[index] = newTile
+        let length = this.getSizesCount(t)
+        while(length > 13) {
+            let i = 1
+            if(t[index + i].size === 1) {
+                t.splice(index + 1, 1)
             }
+            else {
+                t[index + 1].size -= 1
+            }
+            length = this.getSizesCount(t)
         }
+        while(length < 13) {
+            t.splice(index + 1, 0, {size: 1,
+                fontColor: '#000000',
+                backgroundColor: '#FFFFFF',
+                subject: '',
+                teacher: '',
+                classroom: '',
+                maxSize: 1
+            })
+            
+            length = this.getSizesCount(t)
+        }
+        t = this.fixMaxSizes(t)
+        this.setState({tiles: t})
+    }
+
+    resetTile(index) {
+        let t = this.state.tiles.slice()
+        t[index] = {
+            subject: '',
+            teacher: '',
+            classroom: '',
+            backgroundColor: '#FFFFFF',
+            fontColor: '#000000',
+            size: 1,
+            maxSize: 1
+        }
+        let length = this.getSizesCount(t)
+        while(length < 13) {
+            t.splice(index + 1, 0, {size: 1,
+                fontColor: '#000000',
+                backgroundColor: '#FFFFFF',
+                subject: '',
+                teacher: '',
+                classroom: '',
+                maxSize: 1
+            })
+            
+            length = this.getSizesCount(t)
+        }
+        t = this.fixMaxSizes(t)
+        this.setState({
+            tiles: t.slice()
+        })
+    }
+
+    render() {
         return (
             <React.Fragment>
                 <Daytile day={this.props.day}/>
-                {this.state.tiles}
+                {this.state.tiles.map((t, index) => {
+                    return <Tile 
+                        key={index}
+                        id={index}
+                        size={t.size} 
+                        setSizes={(index, value) => {this.setSizes(index, value)}}
+                        fontColor={t.fontColor} 
+                        backgroundColor={t.backgroundColor}
+                        subject={t.subject}
+                        teacher={t.teacher}
+                        classroom={t.classroom}
+                        editTile={(index, newTile) => this.editTile(index, newTile)}
+                        resetTile={(index) => this.resetTile(index)}
+                        maxSize={t.maxSize}
+                    />
+                })}
             </React.Fragment>
         );
     }

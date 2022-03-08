@@ -9,16 +9,22 @@ class Row extends Component {
 
   tilesInit() {
     let tiles = [];
-    for (let i = 0; i < 13; i++) {
-      tiles.push({
-        size: 1,
-        fontColor: "#000000",
-        backgroundColor: "#FFFFFF",
-        subject: "",
-        teacher: "",
-        classroom: "",
-        maxSize: 13 - i,
-      });
+    if(localStorage.getItem(this.props.day)) {
+        tiles = JSON.parse(localStorage.getItem(this.props.day))
+    }
+    else {
+        for (let i = 0; i < 13; i++) {
+            tiles.push({
+                size: 1,
+                fontColor: "#000000",
+                backgroundColor: "#FFFFFF",
+                subject: "",
+                teacher: "",
+                classroom: "",
+                maxSize: 13 - i,
+            });
+        }
+        localStorage.setItem(this.props.day, JSON.stringify(tiles))
     }
     return tiles;
   }
@@ -78,6 +84,7 @@ class Row extends Component {
       length = this.getSizesCount(t);
     }
     t = this.fixMaxSizes(t);
+    localStorage.setItem(this.props.day, JSON.stringify(t))
     this.setState({ tiles: t });
   }
 
@@ -107,6 +114,7 @@ class Row extends Component {
       length = this.getSizesCount(t);
     }
     t = this.fixMaxSizes(t);
+    localStorage.setItem(this.props.day, JSON.stringify(t))
     this.setState({
       tiles: t.slice(),
     });

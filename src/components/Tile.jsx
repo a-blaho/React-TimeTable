@@ -16,6 +16,10 @@ class Tile extends Component {
       backgroundColor: document.querySelector("#backgroundColor").value,
       size: Number(document.querySelector("#size").value),
     };
+    if(Number(document.querySelector("#size").value) > this.props.maxSize) {
+        document.querySelector('#small').style.visibility = "visible"
+        return
+    }
     this.props.editTile(this.props.id, newTile);
     this.handleModal();
   }
@@ -118,6 +122,7 @@ class Tile extends Component {
               min={1}
               max={this.props.maxSize}
             />
+            <small id="small" style={{color: "red", visibility: "hidden"}}>Invalid tile size</small>
             <br />
             <button
               className="btn btn-danger m-1"

@@ -51,11 +51,15 @@ class Tile extends Component {
             color: this.props.fontColor,
           }}
         >
-          <p>
+          <p style={{}}>
             {this.props.subject}
-            <br />
+            
+            {(this.props.subject !== "") && (this.props.teacher !== "") ? <br /> : ""}
+            
             {this.props.teacher}
-            <br />
+            
+            {((this.props.teacher !== "") || (this.props.subject !== "")) && (this.props.classroom !== "") ? <br /> : ""}
+            
             {this.props.classroom}
           </p>
         </div>

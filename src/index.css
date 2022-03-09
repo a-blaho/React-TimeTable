@@ -6,6 +6,9 @@
   margin: -0.5px;
   float: left;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .timetile {

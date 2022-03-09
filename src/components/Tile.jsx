@@ -16,7 +16,8 @@ class Tile extends Component {
       backgroundColor: document.querySelector("#backgroundColor").value,
       size: Number(document.querySelector("#size").value),
     };
-    if(Number(document.querySelector("#size").value) > this.props.maxSize) {
+    let size = Number(document.querySelector("#size").value) 
+    if(size > this.props.maxSize || size < 1) {
         document.querySelector('#small').style.visibility = "visible"
         return
     }
